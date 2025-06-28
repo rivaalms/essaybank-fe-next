@@ -31,7 +31,7 @@ function onContactClick(type: "mail" | "whatsapp") {
                      </p>
                   </div>
                   <div class="flex flex-col gap-4">
-                     <span class="font-semibold"> Navigasi </span>
+                     <span class="font-medium"> Navigasi </span>
                      <ul class="space-y-2 text-muted-400">
                         <li>
                            <NuxtLink
@@ -52,7 +52,7 @@ function onContactClick(type: "mail" | "whatsapp") {
                      </ul>
                   </div>
                   <div class="flex flex-col gap-4">
-                     <span class="font-semibold">Kontak</span>
+                     <span class="font-medium">Kontak</span>
                      <div class="flex flex-wrap gap-4">
                         <BaseButton
                            variant="dark"

@@ -1,14 +1,47 @@
+<script setup lang="ts">
+const scroll = reactive({
+   x: window.scrollX,
+   y: window.scrollY,
+})
+
+function updateScroll() {
+   scroll.x = window.scrollX
+   scroll.y = window.scrollY
+}
+
+onMounted(() => {
+   window.addEventListener("scroll", updateScroll, { passive: true })
+})
+
+onUnmounted(() => {
+   window.removeEventListener("scroll", updateScroll)
+})
+</script>
+
 <template>
-   <header class="relative z-10">
+   <header
+      class="z-10 transition-colors border-b"
+      :class="[scroll.y > 0 ? 'border-muted-200' : 'border-transparent']"
+   >
       <div
          class="container mx-auto h-(--header-height) flex items-center w-full"
       >
          <div class="flex-1 flex items-center justify-between">
-            <span class="font-bold">EssayBank</span>
+            <NuxtLink
+               to="/essays"
+               class="font-bold"
+            >
+               EssayBank
+            </NuxtLink>
             <DevOnly>
                <BaseThemeSwitch />
+               {{ scroll.y }}
             </DevOnly>
-            <BaseButton rounded="full">
+            <BaseButton
+               v-if="$route.path == '/'"
+               rounded="full"
+               to="/essays"
+            >
                <span>Mulai Sekarang</span>
                <Icon name="lucide:arrow-right" />
             </BaseButton>
