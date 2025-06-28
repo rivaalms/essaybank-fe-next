@@ -11,7 +11,7 @@
                      Jawaban esaimu akan membantu membuat sistem penilaian otomatis yang lebih pintar!
                   </p>
                   <div class="mt-8 flex gap-4">
-                     <BaseButton size="xl" variant="primary">
+                     <BaseButton size="xl" variant="primary" to="/essays">
                         Mulai Sekarang
                      </BaseButton>
                      <BaseButton size="xl" variant="ghost">

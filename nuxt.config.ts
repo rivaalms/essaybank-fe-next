@@ -1,16 +1,30 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { fileURLToPath } from "node:url"
+import { join, dirname } from "node:path"
+
+const currentDir = dirname(fileURLToPath(import.meta.url))
+
 export default defineNuxtConfig({
    compatibilityDate: "2025-05-15",
    devtools: { enabled: true },
    ssr: false,
    components: [
       {
-         path: "~/components",
+         path: join(currentDir, "./components"),
          pathPrefix: false,
       },
    ],
    imports: {
-      dirs: ["~/stores/**", "~/composables/**", "~/utils/**"],
+      dirs: [
+         join(currentDir, "./stores/**"),
+         join(currentDir, "./composables/**"),
+         join(currentDir, "./utils/**"),
+      ],
+   },
+   runtimeConfig: {
+      public: {
+         apiUrl: import.meta.env.API_URL,
+      },
    },
    modules: [
       "@nuxt/fonts",
@@ -21,7 +35,7 @@ export default defineNuxtConfig({
       "pinia-plugin-persistedstate/nuxt",
       "dayjs-nuxt",
    ],
-   css: ["~/assets/css/main.css"],
+   css: [join(currentDir, "./assets/css/main.css")],
    fonts: {
       defaults: {
          weights: [300, 400, 500, 600, 700, 800],
