@@ -9,5 +9,6 @@ declare namespace API {
       }>
 
       type Question = Paginable & Searchable
+      type Response = Paginable
    }
 }

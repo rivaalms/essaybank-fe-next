@@ -23,8 +23,8 @@ onMounted(() => {
                <ul class="list-disc space-y-2 ms-4">
                   <li class="text-pretty">
                      <span class="font-medium text-primary-500">
-                        Ada {{ essayStore.totalQuestions }} pertanyaan esai yang bisa kamu
-                        isi.
+                        Ada {{ essayStore.totalQuestions }} pertanyaan esai yang
+                        bisa kamu isi.
                      </span>
                      Kamu nggak harus menjawab semuanya, tapi semakin banyak
                      yang kamu isi, semakin bermanfaat untuk penelitian ini!
@@ -51,12 +51,46 @@ onMounted(() => {
                      </span>
                   </li>
                </ul>
+               <p class="text-pretty font-display font-semibold">
+                  Cara mengisi esai:
+               </p>
+               <ul class="list-disc space-y-2 ms-4">
+                  <li>
+                     Akan tampil
+                     <span class="font-medium text-primary-500">
+                        1 soal esai per halaman.
+                     </span>
+                  </li>
+                  <li>Tulis jawabanmu di kolom yang tersedia.</li>
+                  <li>
+                     Klik
+                     <span class="font-medium text-primary-500">
+                        “Selanjutnya”
+                     </span>
+                     atau
+                     <span class="font-medium text-primary-500">
+                        “Sebelumnya”
+                     </span>
+                     untuk berpindah soal. Kamu juga bisa menggunakan
+                     <span class="font-medium text-primary-500">
+                        Navigasi Kuis
+                     </span>
+                     di bagian kiri halaman.
+                  </li>
+                  <li>
+                     Jawabanmu akan
+                     <span class="font-medium text-primary-500">
+                        tersimpan otomatis di setiap perpindahan soal.
+                     </span>
+                  </li>
+               </ul>
                <p class="text-pretty">Siap? Yuk mulai esainya! 🚀✍️</p>
             </div>
             <div class="flex justify-end">
                <BaseButton
                   variant="primary"
                   class="gap-2"
+                  to="/essays/1"
                >
                   Mulai Sekarang
                   <Icon name="lucide:arrow-right" />
