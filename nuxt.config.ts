@@ -4,7 +4,15 @@ export default defineNuxtConfig({
    devtools: { enabled: true },
    ssr: false,
    modules: ["@nuxt/fonts", "@nuxt/icon", "@nuxt/image", "@shuriken-ui/nuxt"],
-   css: [
-      "~/assets/css/main.css"
-   ]
+   css: ["~/assets/css/main.css"],
+   fonts: {
+      defaults: {
+         weights: [300, 400, 500, 600, 700, 800],
+      },
+   },
+   colorMode: {
+      preference: "light",
+      fallback: "light",
+      storageKey: "color-mode"
+   },
 })
