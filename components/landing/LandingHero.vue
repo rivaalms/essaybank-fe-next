@@ -1,7 +1,7 @@
 <template>
-   <div class="h-[calc(100vh-8rem)] -mt-(--header-height)">
+   <div class="h-[calc(100vh-var(--header-height))]">
       <div class="relative h-full">
-         <div class="container mx-auto pt-(--header-height) h-full pb-24">
+         <div class="container mx-auto pt-(--header-height) h-full pb-48">
             <div class="h-full flex items-center">
                <div class="flex flex-col gap-4 flex-1">
                   <span class="text-8xl leading-[1.15] font-bold font-display">
@@ -21,7 +21,7 @@
                </div>
             </div>
          </div>
-         <NuxtImg src="/img/teaching_outline_black.svg" class="absolute right-20 bottom-16 w-1/2" />
+         <NuxtImg src="/img/teaching.svg" class="absolute right-12 bottom-12 w-2/5" />
       </div>
    </div>
 </template>

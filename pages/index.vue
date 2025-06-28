@@ -1,8 +1,8 @@
 <template>
    <div>
       <LandingHero />
-      <LandingProfile class="my-24" />
-      <LandingPrivacy class="my-24" />
-      <LandingContact class="my-24" />
+      <LandingProfile class="mb-40" />
+      <LandingPrivacy class="my-40" />
+      <LandingContact class="my-40" />
    </div>
 </template>

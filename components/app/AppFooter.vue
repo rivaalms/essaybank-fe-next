@@ -43,7 +43,7 @@ function onContactClick(type: "mail" | "whatsapp") {
                         </li>
                         <li>
                            <NuxtLink
-                              to="/essay"
+                              to="/essays"
                               class="hover:underline"
                            >
                               Isi Esai

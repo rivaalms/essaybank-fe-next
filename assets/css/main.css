@@ -34,6 +34,18 @@
    --color-muted-800: var(--color-neutral-800);
    --color-muted-900: var(--color-neutral-900);
    --color-muted-950: var(--color-neutral-950);
+
+   --color-paris-daisy-50: #fbfcea;
+   --color-paris-daisy-100: #f8fac7;
+   --color-paris-daisy-200: #f4f692;
+   --color-paris-daisy-300: #f1ee63;
+   --color-paris-daisy-400: #e9dd26;
+   --color-paris-daisy-500: #d9c619;
+   --color-paris-daisy-600: #bc9c12;
+   --color-paris-daisy-700: #967212;
+   --color-paris-daisy-800: #7c5a17;
+   --color-paris-daisy-900: #6a4a19;
+   --color-paris-daisy-950: #3e280a;
 }
 
 @utility bg-pattern-plus {
