@@ -3,7 +3,24 @@ export default defineNuxtConfig({
    compatibilityDate: "2025-05-15",
    devtools: { enabled: true },
    ssr: false,
-   modules: ["@nuxt/fonts", "@nuxt/icon", "@nuxt/image", "@shuriken-ui/nuxt"],
+   components: [
+      {
+         path: "~/components",
+         pathPrefix: false,
+      },
+   ],
+   imports: {
+      dirs: ["~/stores/**", "~/composables/**", "~/utils/**"],
+   },
+   modules: [
+      "@nuxt/fonts",
+      "@nuxt/icon",
+      "@nuxt/image",
+      "@shuriken-ui/nuxt",
+      "@pinia/nuxt",
+      "pinia-plugin-persistedstate/nuxt",
+      "dayjs-nuxt",
+   ],
    css: ["~/assets/css/main.css"],
    fonts: {
       defaults: {
@@ -13,6 +30,12 @@ export default defineNuxtConfig({
    colorMode: {
       preference: "light",
       fallback: "light",
-      storageKey: "color-mode"
+      storageKey: "color-mode",
+   },
+   dayjs: {
+      locales: ["id"],
+      defaultLocale: "id",
+      defaultTimezone: "Asia/Jakarta",
+      plugins: ["utc", "relativeTime", "timezone"],
    },
 })
