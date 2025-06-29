@@ -28,7 +28,7 @@ onUnmounted(() => {
       >
          <div class="flex-1 flex items-center justify-between">
             <NuxtLink
-               to="/essays"
+               to="/"
                class="font-bold"
             >
                EssayBank
@@ -38,7 +38,7 @@ onUnmounted(() => {
                {{ scroll.y }}
             </DevOnly>
             <BaseButton
-               v-if="$route.path == '/'"
+               v-if="$route.path == '/' && scroll.y > 800"
                rounded="full"
                to="/essays"
             >

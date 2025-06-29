@@ -1,3 +1,17 @@
+<script setup lang="ts">
+function onAboutClick() {
+   const el = document.querySelector("#about")
+   if (!el) return
+
+   const y = el.getBoundingClientRect().top + window.scrollY
+   const offset = 100 // berenti 100px sebelum elemen
+   window.scrollTo({
+      top: y - offset,
+      behavior: "smooth",
+   })
+}
+</script>
+
 <template>
    <div class="h-[calc(100vh-var(--header-height))]">
       <div class="relative h-full">
@@ -23,6 +37,7 @@
                      <BaseButton
                         size="xl"
                         variant="ghost"
+                        @click="onAboutClick"
                      >
                         Tentang
                      </BaseButton>
