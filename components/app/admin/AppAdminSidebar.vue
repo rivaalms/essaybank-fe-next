@@ -21,8 +21,8 @@ function onLogout() {
 </script>
 
 <template>
-   <aside class="fixed left-0 inset-y-0 w-(--admin-sidebar-width) m-2">
-      <div class="bg-white border border-muted-200 rounded-2xl shadow-lg">
+   <aside class="fixed left-0 inset-y-0 w-(--admin-sidebar-width) m-4">
+      <div class="bg-white rounded-2xl shadow-lg">
          <div class="h-(--admin-header-height) flex items-center px-4">
             <NuxtLink
                to="/admin"
@@ -32,7 +32,7 @@ function onLogout() {
             </NuxtLink>
          </div>
          <div
-            class="flex flex-col h-[calc(100vh-var(--admin-header-height)-1rem)]"
+            class="flex flex-col h-[calc(100vh-var(--admin-header-height)-2rem)]"
          >
             <div
                class="flex-1 p-4 pt-0 flex flex-col overflow-y-auto nui-slimscroll"
