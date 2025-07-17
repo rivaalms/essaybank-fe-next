@@ -34,6 +34,7 @@ export default defineNuxtConfig({
       "@pinia/nuxt",
       "pinia-plugin-persistedstate/nuxt",
       "dayjs-nuxt",
+      "@vueuse/nuxt"
    ],
    css: [join(currentDir, "./assets/css/main.css")],
    fonts: {

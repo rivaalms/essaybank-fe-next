@@ -1,5 +1,5 @@
 <template>
-   <div>
+   <div class="antialiased">
       <NuxtRouteAnnouncer />
       <NuxtLoadingIndicator />
       <BaseProviders :toast="{ max: 10 }">

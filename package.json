@@ -26,6 +26,8 @@
   },
   "devDependencies": {
     "@shuriken-ui/nuxt": "4.0.0-beta.4",
+    "@vueuse/core": "^13.5.0",
+    "@vueuse/nuxt": "^13.5.0",
     "prettier": "^3.6.1",
     "tailwindcss": "^4.1.11",
     "yup-locales": "^1.2.28"
