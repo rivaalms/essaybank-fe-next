@@ -11,6 +11,9 @@
    --header-height: 64px;
    --footer-height: 312px;
 
+   --admin-sidebar-width: 280px;
+   --admin-header-height: calc(var(--spacing) * 18);
+
    --color-primary-50: var(--color-indigo-50);
    --color-primary-100: var(--color-indigo-100);
    --color-primary-200: var(--color-indigo-200);

@@ -2,7 +2,7 @@
    <div>
       <NuxtRouteAnnouncer />
       <NuxtLoadingIndicator />
-      <BaseProviders>
+      <BaseProviders :toast="{ max: 10 }">
          <NuxtLayout>
             <NuxtPage />
          </NuxtLayout>
