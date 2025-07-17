@@ -9,6 +9,15 @@ function isRouteActive(path: string) {
 function navigateRoute(menuItem: Menu) {
    navigateTo(menuItem.to)
 }
+
+const authStore = useAuthStore()
+const user = computed(() => authStore.user)
+
+function onLogout() {
+   authStore.logout()
+   useAppStore().notify("Info", "Berhasil keluar")
+   navigateTo("/")
+}
 </script>
 
 <template>
@@ -23,14 +32,16 @@ function navigateRoute(menuItem: Menu) {
             </NuxtLink>
          </div>
          <div
-            class="p-4 pt-0 flex flex-col h-[calc(100vh-var(--admin-header-height)-1rem)]"
+            class="flex flex-col h-[calc(100vh-var(--admin-header-height)-1rem)]"
          >
-            <div class="flex-1 flex-flex col">
+            <div
+               class="flex-1 p-4 pt-0 flex flex-col overflow-y-auto nui-slimscroll"
+            >
                <template v-for="item in menu">
                   <div
-                     class="px-2 py-3 rounded-lg hover:bg-muted-100 text-sm font-medium cursor-pointer"
+                     class="px-2 py-4 rounded-lg hover:bg-muted-100 text-sm font-medium cursor-pointer"
                      :class="{
-                        'bg-primary-500 text-white hover:bg-primary-600':
+                        'bg-primary-100 text-primary-500 hover:bg-primary-200 font-semibold':
                            isRouteActive(item.to),
                      }"
                      @click="navigateRoute(item)"
@@ -44,15 +55,42 @@ function navigateRoute(menuItem: Menu) {
                   </div>
                </template>
             </div>
-            <div class="">
-               <div
-                  class="px-2 py-3 rounded-lg hover:bg-muted-100 text-sm font-medium cursor-pointer"
-               >
-                  <div class="flex items-center gap-2">
-                     <Icon name="lucide:user" />
-                     <span class="flex-1"> User Name </span>
-                  </div>
-               </div>
+            <div class="p-4">
+               <BaseDropdown :bindings="{ content: { align: 'start', side: 'top' } }">
+                  <template #button>
+                     <div class="px-2 py-4 rounded-lg hover:bg-muted-100 text-sm font-medium cursor-pointer">
+                        <div class="flex items-center gap-2">
+                           <BaseAvatar
+                              src="https://api.dicebear.com/9.x/adventurer-neutral/svg"
+                           />
+                           <div class="flex-1 flex flex-col">
+                              <span class="flex-1"> {{ user?.name }} </span>
+                              <span
+                                 class="text-xs text-muted-500 uppercase tracking-wide"
+                              >
+                                 {{ user?.role }}
+                              </span>
+                           </div>
+                           <Icon name="lucide:chevron-down" />
+                        </div>
+                     </div>
+                  </template>
+                  <BaseDropdownItem class="hover:focus-within:ring-0">
+                     <template #start>
+                        <Icon name="lucide:user" />
+                     </template>
+                     Profil
+                  </BaseDropdownItem>
+                  <BaseDropdownItem class="hover:focus-within:ring-0" @select="onLogout">
+                     <template #start>
+                        <Icon name="lucide:log-out" class="text-red-500" />
+                     </template>
+                     <span class="text-red-500">
+                        Keluar
+                     </span>
+                  </BaseDropdownItem>
+                  <BaseDropdownArrow />
+               </BaseDropdown>
             </div>
          </div>
       </div>

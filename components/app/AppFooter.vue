@@ -49,6 +49,14 @@ function onContactClick(type: "mail" | "whatsapp") {
                               Isi Esai
                            </NuxtLink>
                         </li>
+                        <li>
+                           <NuxtLink
+                              to="/admin"
+                              class="hover:underline"
+                           >
+                              Admin
+                           </NuxtLink>
+                        </li>
                      </ul>
                   </div>
                   <div class="flex flex-col gap-4">

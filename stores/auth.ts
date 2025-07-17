@@ -13,6 +13,10 @@ export const useAuthStore = defineStore(
          return res
       }
 
+      function logout() {
+         $reset()
+      }
+
       function $reset() {
          user.value = undefined
          token.value = undefined
@@ -23,6 +27,7 @@ export const useAuthStore = defineStore(
          token,
          getToken,
          login,
+         logout,
          $reset,
       }
    },
