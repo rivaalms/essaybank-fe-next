@@ -21,23 +21,21 @@ export default async function <
 ): Promise<TypedInternalResponse<R, T>> {
    const config = useRuntimeConfig().public
    const token = useAuthStore().getToken
+   const tokenExpiredAt = useAuthStore().getTokenExpiresAt
+   const dayjs = useDayjs()
 
    const handler = $fetch.create({
       baseURL: config.apiUrl,
 
       async onRequest({ request, options }) {
          options.headers.set("Accept", "application/json")
-         if (token) {
+         if (token && dayjs().diff(tokenExpiredAt) < 1) {
             options.headers.set("Authorization", `Bearer ${token}`)
          }
       },
 
       async onRequestError({ error }) {
-         // useAppStore().notify(
-         //    "error",
-         //    "Error",
-         //    error.message ?? "Something went wrong"
-         // )
+         useAppStore().notify("Error", error.message ?? "Terjadi kesalahan")
          throw error
       },
 

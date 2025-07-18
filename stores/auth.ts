@@ -3,13 +3,17 @@ export const useAuthStore = defineStore(
    () => {
       const user = ref<Model.User>()
       const token = shallowRef<string>()
+      const tokenExpiresAt = shallowRef<string>()
 
       const getToken = computed(() => token.value)
+      const getTokenExpiresAt = computed(() => tokenExpiresAt.value)
 
       async function login(values: InferSchema<typeof $authSchema, "login">) {
          const res = await $authApi().login(values)
          user.value = res.data.user
-         token.value = res.data.token
+         token.value = res.data.token.value
+         const dayjs = useDayjs()
+         tokenExpiresAt.value = dayjs(res.data.token.expiresAt).toJSON()
          return res
       }
 
@@ -26,6 +30,8 @@ export const useAuthStore = defineStore(
          user,
          token,
          getToken,
+         tokenExpiresAt,
+         getTokenExpiresAt,
          login,
          logout,
          $reset,

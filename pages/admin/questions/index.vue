@@ -27,7 +27,7 @@ watchDebounced(
       query.value.page = 1
       refresh()
    },
-   { debounce: 800, maxWait: 1000 }
+   { debounce: 800, maxWait: 2000 }
 )
 
 const columns: DataTableColumn[] = [

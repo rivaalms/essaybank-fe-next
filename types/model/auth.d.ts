@@ -1,6 +1,9 @@
 declare namespace Model {
    type Auth = {
       user: Model.User
-      token: string
+      token: {
+         value: string
+         expiresAt: string
+      }
    }
 }

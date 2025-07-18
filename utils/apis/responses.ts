@@ -1,6 +1,6 @@
 export function $responseApi() {
    async function get(query?: API.Query.Response) {
-      const token = useAuthStore().token
+      const token = useAuthStore().getToken
       const ip = useEssayStore().ip
       const headers: Record<string, string> = {}
       if (!token && ip) {
