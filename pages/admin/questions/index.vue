@@ -35,6 +35,10 @@ const columns: DataTableColumn[] = [
    { field: "updatedAt", header: "Terakhir Diperbarui", style: "min-width: 250px" },
    { field: "actions", header: "" },
 ]
+
+function onDetail() {
+   useAppStore().showDialog("lorem", h("div", {}, { default: () => "lorem" }))
+}
 </script>
 
 <template>
@@ -86,6 +90,7 @@ const columns: DataTableColumn[] = [
                         <BaseButton
                            variant="ghost"
                            size="icon-sm"
+                           @click="onDetail"
                         >
                            <Icon name="lucide:eye" />
                         </BaseButton>

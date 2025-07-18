@@ -7,6 +7,7 @@
          <div class="py-4">
             <slot />
          </div>
+         <AppDialog />
       </main>
    </div>
 </template>
