@@ -1,4 +1,4 @@
-import type { AnyObject, ObjectSchema, InferType } from "yup"
+import type { AnyObject, ObjectSchema, InferType, ValidationError } from "yup"
 
 export default function <
    V extends ObjectSchema<AnyObject>,
@@ -21,9 +21,18 @@ export default function <
       error.value = {}
       loading.value = true
       await validationSchema
-         .validate(form.value)
+         .validate(form.value, { abortEarly: false })
          .then((values) => onValidationSuccess(values))
-         .catch((err) => onValidationError?.(err))
+         .catch((err: ValidationError) => {
+            if (err.inner) {
+               err.inner.forEach((_e) => {
+                  error.value[_e.path as keyof InferType<V>] = _e.message
+               })
+            } else {
+               error.value[err.path as keyof InferType<V>] = err.message
+            }
+            onValidationError?.(error.value)
+         })
          .finally(() => (loading.value = false))
    }
 
@@ -31,6 +40,6 @@ export default function <
       form,
       error,
       loading,
-      submit
+      submit,
    }
 }

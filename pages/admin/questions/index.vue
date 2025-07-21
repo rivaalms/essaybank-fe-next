@@ -32,12 +32,54 @@ watchDebounced(
 
 const columns: DataTableColumn[] = [
    { field: "questionText", header: "Pertanyaan" },
-   { field: "updatedAt", header: "Terakhir Diperbarui", style: "min-width: 250px" },
+   {
+      field: "updatedAt",
+      header: "Terakhir Diperbarui",
+      style: "min-width: 250px",
+   },
    { field: "actions", header: "" },
 ]
 
-function onDetail() {
-   useAppStore().showDialog("lorem", h("div", {}, { default: () => "lorem" }))
+const appStore = useAppStore()
+function onDetail(row: Model.Question) {
+   appStore.showDialog(
+      "Detail Pertanyaan",
+      h(resolveComponent("DetailQuestion"), {
+         data: row,
+      })
+   )
+}
+
+const formLoading = shallowRef(false)
+function onOpenForm(row?: Model.Question) {
+   appStore.showDialog(
+      "Form Pertanyaan",
+      h(resolveComponent("FormQuestion"), {
+         data: row,
+         loading: formLoading,
+         onSubmit: async (
+            values: InferSchema<typeof $questionSchema, "create">
+         ) => {
+            const handler = () =>
+               row
+                  ? $questionApi().update(row.id, values)
+                  : $questionApi().create(values)
+            formLoading.value = true
+            await handler()
+               .then((res) => {
+                  appStore.notify("Sukses", res.meta.message)
+                  appStore.closeDialog()
+                  refresh()
+               })
+               .finally(() => {
+                  formLoading.value = false
+               })
+         },
+      }),
+      {
+         width: "50%",
+      }
+   )
 }
 </script>
 
@@ -55,7 +97,10 @@ function onDetail() {
                >
                   Daftar Pertanyaan
                </BaseHeading>
-               <BaseButton variant="primary">
+               <BaseButton
+                  variant="primary"
+                  @click="onOpenForm"
+               >
                   <Icon
                      name="lucide:plus"
                      class="-ms-1 h-4 w-4"
@@ -68,8 +113,8 @@ function onDetail() {
                :columns="columns"
                :total="data?.total ?? 0"
                :loading="status === 'pending'"
-               v-model:page="(query.page as number)"
-               v-model:per-page="(query.perPage as number)"
+               v-model:page="query.page as number"
+               v-model:per-page="query.perPage as number"
             >
                <template #header>
                   <div class="flex items-center">
@@ -86,24 +131,34 @@ function onDetail() {
                </template>
                <template #row.actions="{ row }">
                   <div class="flex items-center">
-                     <BaseTooltip content="Detail" variant="dark">
+                     <BaseTooltip
+                        content="Detail"
+                        variant="dark"
+                     >
                         <BaseButton
                            variant="ghost"
                            size="icon-sm"
-                           @click="onDetail"
+                           @click="onDetail(row)"
                         >
                            <Icon name="lucide:eye" />
                         </BaseButton>
                      </BaseTooltip>
-                     <BaseTooltip content="Edit" variant="dark">
+                     <BaseTooltip
+                        content="Edit"
+                        variant="dark"
+                     >
                         <BaseButton
                            variant="ghost"
                            size="icon-sm"
+                           @click="onOpenForm(row)"
                         >
                            <Icon name="lucide:edit" />
                         </BaseButton>
                      </BaseTooltip>
-                     <BaseTooltip content="Hapus" variant="dark">
+                     <BaseTooltip
+                        content="Hapus"
+                        variant="dark"
+                     >
                         <BaseButton
                            variant="ghost"
                            size="icon-sm"
