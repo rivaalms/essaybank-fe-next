@@ -24,6 +24,7 @@ export const useAuthStore = defineStore(
       function $reset() {
          user.value = undefined
          token.value = undefined
+         tokenExpiresAt.value = undefined
       }
 
       return {
