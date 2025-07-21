@@ -81,6 +81,18 @@ function onOpenForm(row?: Model.Question) {
       }
    )
 }
+
+function onDelete(row: Model.Question) {
+   appStore.showConfirmDialog(
+      "Hapus Pertanyaan",
+      async () => {
+         const response = await $questionApi().destroy(row.id)
+         appStore.notify("Info", response.meta.message)
+         appStore.closeDialog()
+         refresh()
+      }
+   )
+}
 </script>
 
 <template>
@@ -99,7 +111,7 @@ function onOpenForm(row?: Model.Question) {
                </BaseHeading>
                <BaseButton
                   variant="primary"
-                  @click="onOpenForm"
+                  @click="onOpenForm()"
                >
                   <Icon
                      name="lucide:plus"
@@ -113,8 +125,8 @@ function onOpenForm(row?: Model.Question) {
                :columns="columns"
                :total="data?.total ?? 0"
                :loading="status === 'pending'"
-               v-model:page="query.page as number"
-               v-model:per-page="query.perPage as number"
+               v-model:page="(query.page as number)"
+               v-model:per-page="(query.perPage as number)"
             >
                <template #header>
                   <div class="flex items-center">
@@ -162,6 +174,7 @@ function onOpenForm(row?: Model.Question) {
                         <BaseButton
                            variant="ghost"
                            size="icon-sm"
+                           @click="onDelete(row)"
                         >
                            <Icon name="lucide:trash" />
                         </BaseButton>
