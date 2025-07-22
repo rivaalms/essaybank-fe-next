@@ -161,7 +161,7 @@ watch(
                         v-if="essayStore.totalQuestions && currentQuestionPage < essayStore.totalQuestions"
                         variant="primary"
                         class="gap-2"
-                        @click="onSubmit"
+                        @click="onSubmit()"
                      >
                         Selanjutnya
                         <Icon name="lucide:arrow-right" />
