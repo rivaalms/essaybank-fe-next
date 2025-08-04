@@ -16,6 +16,12 @@ export function $responseApi() {
       )
    }
 
+   async function find(id: number) {
+      return await $api<API.Response<Model.Response>>(`/responses/${id}`, {
+         method: "get",
+      })
+   }
+
    async function create(body: InferSchema<typeof $responseSchema, "create">) {
       return await $api<API.Response<Model.Response>>(`/responses`, {
          method: "post",
@@ -35,6 +41,7 @@ export function $responseApi() {
 
    return {
       get,
+      find,
       create,
       update,
    }

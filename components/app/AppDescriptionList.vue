@@ -53,14 +53,15 @@ const props = withDefaults(
          }"
       >
          <template v-for="item in props.data">
-            <div class="flex items-center">
+            <div class="flex">
                <span
                   class="font-medium text-muted-500"
                   :style="{ width: props.labelWidth }"
                >
                   {{ item[props.listLabel] }}
                </span>
-               <span class="flex-1 before:content-[':_']">
+               <span class="after:content-[':'] mx-2"></span>
+               <span class="flex-1 text-pretty">
                   {{ item[props.listValue] }}
                </span>
             </div>
