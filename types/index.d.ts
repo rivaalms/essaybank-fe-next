@@ -2,6 +2,7 @@ declare type Menu = {
    label: string
    to: string
    icon: string
+   role: ("admin" | "reviewer")[]
 }
 
 declare type DataTableColumn = {

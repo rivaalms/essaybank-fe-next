@@ -1,5 +1,12 @@
 <script setup lang="ts">
-const menu = useAppConfig().menu
+const authStore = useAuthStore()
+const user = computed(() => authStore.user)
+
+const menu = computed(() => {
+   return useAppConfig().menu.filter(
+      (item) => user.value && item.role.includes(user.value.role)
+   )
+})
 const route = useRoute()
 
 function isRouteActive(path: string) {
@@ -9,9 +16,6 @@ function isRouteActive(path: string) {
 function navigateRoute(menuItem: Menu) {
    navigateTo(menuItem.to)
 }
-
-const authStore = useAuthStore()
-const user = computed(() => authStore.user)
 
 function onLogout() {
    authStore.logout()
@@ -56,9 +60,13 @@ function onLogout() {
                </template>
             </div>
             <div class="p-4">
-               <BaseDropdown :bindings="{ content: { align: 'start', side: 'top' } }">
+               <BaseDropdown
+                  :bindings="{ content: { align: 'start', side: 'top' } }"
+               >
                   <template #button>
-                     <div class="px-2 py-4 rounded-lg hover:bg-muted-100 text-sm font-medium cursor-pointer">
+                     <div
+                        class="px-2 py-4 rounded-lg hover:bg-muted-100 text-sm font-medium cursor-pointer"
+                     >
                         <div class="flex items-center gap-2">
                            <BaseAvatar
                               src="https://api.dicebear.com/9.x/adventurer-neutral/svg"
@@ -81,13 +89,17 @@ function onLogout() {
                      </template>
                      Profil
                   </BaseDropdownItem>
-                  <BaseDropdownItem class="hover:focus-within:ring-0" @select="onLogout">
+                  <BaseDropdownItem
+                     class="hover:focus-within:ring-0"
+                     @select="onLogout"
+                  >
                      <template #start>
-                        <Icon name="lucide:log-out" class="text-red-500" />
+                        <Icon
+                           name="lucide:log-out"
+                           class="text-red-500"
+                        />
                      </template>
-                     <span class="text-red-500">
-                        Keluar
-                     </span>
+                     <span class="text-red-500"> Keluar </span>
                   </BaseDropdownItem>
                   <BaseDropdownArrow />
                </BaseDropdown>

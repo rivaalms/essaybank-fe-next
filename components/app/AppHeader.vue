@@ -20,11 +20,11 @@ onUnmounted(() => {
 
 <template>
    <header
-      class="z-10 transition-colors border-b"
+      class="z-10 border-b"
       :class="[scroll.y > 0 ? 'border-muted-200' : 'border-transparent']"
    >
       <div
-         class="container mx-auto h-(--header-height) flex items-center w-full"
+         class="container mx-auto px-4 xl:px-0 h-(--header-height) flex items-center w-full"
       >
          <div class="flex-1 flex items-center justify-between">
             <NuxtLink

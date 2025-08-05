@@ -25,10 +25,11 @@ async function onSubmit() {
 </script>
 
 <template>
-   <main class="h-screen flex items-center justify-center">
-      <BaseCard class="p-5 min-w-1/5">
+   <main class="h-screen px-4 xl:px-0 flex items-center justify-center">
+      <BaseCard class="p-5 w-full md:max-w-[600px]">
          <div class="flex flex-col gap-4">
-            <h1 class="text-lg font-semibold">Login</h1>
+            <h1 class="text-lg font-bold tracking-wide font-display">EssayBank Admin</h1>
+            <span class="text-muted-500 font-medium">Login</span>
             <form
                @submit.prevent="onSubmit"
                class="grid gap-4"

@@ -29,7 +29,7 @@ function showData(item: NonNullable<T>, column: DataTableColumn) {
 </script>
 
 <template>
-   <div class="flex flex-col gap-4 relative">
+   <div class="flex flex-col gap-4 relative overflow-x-auto">
       <div v-if="props.loading" class="absolute -inset-2 bg-black/50 z-20 rounded-xl flex items-center justify-center">
          <BaseProgressCircle variant="primary" />
       </div>
@@ -49,27 +49,39 @@ function showData(item: NonNullable<T>, column: DataTableColumn) {
             </tr>
          </thead>
          <tbody>
-            <tr
-               v-for="(row, rowIndex) in rows"
-               :key="`body-row-${rowIndex}`"
-               class="border-b border-muted-200 hover:bg-muted-50"
-            >
-               <td
-                  v-for="(column, key) in columns"
-                  :key="`body-item-${key}`"
-                  class="py-4 px-6"
-                  :style="column.style"
+            <template v-if="rows.length > 0">
+               <tr
+                  v-for="(row, rowIndex) in rows"
+                  :key="`body-row-${rowIndex}`"
+                  class="border-b border-muted-200 hover:bg-muted-50"
                >
-                  <slot
-                     :name="`row.${column.field}`"
-                     :row="row"
+                  <td
+                     v-for="(column, key) in columns"
+                     :key="`body-item-${key}`"
+                     class="py-4 px-6"
+                     :style="column.style"
                   >
-                     <span>
-                        {{ showData(row as NonNullable<T>, column) }}
-                     </span>
-                  </slot>
-               </td>
-            </tr>
+                     <slot
+                        :name="`row.${column.field}`"
+                        :row="row"
+                     >
+                        <span>
+                           {{ showData(row as NonNullable<T>, column) }}
+                        </span>
+                     </slot>
+                  </td>
+               </tr>
+            </template>
+            <template v-else>
+               <tr class="border-b border-muted-200">
+                  <td :colspan="columns.length" class="py-12 px-6 text-muted-500">
+                     <div class="flex flex-col items-center justify-center gap-4">
+                        <Icon name="tabler:database-x" class="size-12!" mode="svg" />
+                        <span>Tidak ada data</span>
+                     </div>
+                  </td>
+               </tr>
+            </template>
          </tbody>
       </table>
       <div class="flex items-center justify-between">

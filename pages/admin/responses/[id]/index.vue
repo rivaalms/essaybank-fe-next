@@ -38,7 +38,7 @@ const reviewQuery = ref<API.Query.Review>({
    perPage: 10,
    responseId: Number(route.params.id)
 })
-const { data: reviews, refresh: refreshReviews } = useLazyAsyncData(
+const { data: reviews, pending: reviewsPending, refresh: refreshReviews } = useLazyAsyncData(
    `response-${route.params.id}-reviews`,
    () => $reviewApi().get(reviewQuery.value),
    {
@@ -106,7 +106,35 @@ function onOpenReviewForm(row?: Model.Review) {
                   Detail Respons
                </BaseHeading>
             </div>
-            <AppDescriptionList :data="responseDetails" />
+            <!-- <AppDescriptionList :data="responseDetails" /> -->
+             <div class="grid grid-cols-4 gap-4">
+               <div class="col-span-3 flex flex-col gap-8">
+                  <div class="flex flex-col gap-2">
+                     <span class="font-semibold text-sm tracking-wide uppercase text-muted-500">Pertanyaan</span>
+                     <p class="text-pretty">{{ data?.Question?.questionText }}</p>
+                  </div>
+                  <div class="flex flex-col gap-2">
+                     <span class="font-semibold text-sm tracking-wide uppercase text-muted-500">Referensi Jawaban</span>
+                     <p class="text-pretty">{{ data?.Question?.referenceAnswer }}</p>
+                  </div>
+                  <div class="flex flex-col gap-2">
+                     <span class="font-semibold text-sm tracking-wide uppercase text-muted-500">Respons</span>
+                     <p class="text-pretty">{{ data?.responseText }}</p>
+                  </div>
+               </div>
+               <div class="border-s border-muted-300 border-dashed ps-4">
+                  <div class="flex flex-col gap-4 text-sm text-muted-500">
+                     <div class="flex items-center gap-4">
+                        <Icon name="lucide:user" class="" />
+                        <span>{{ data?.identifier }}</span>
+                     </div>
+                     <div class="flex items-center gap-4">
+                        <Icon name="lucide:calendar" class="" />
+                        <span>{{ dayjs(data?.createdAt).format("DD MMMM YYYY") }}</span>
+                     </div>
+                  </div>
+               </div>
+             </div>
          </div>
       </BaseCard>
       <BaseCard class="p-5 rounded-2xl! border-0 shadow-xl">
@@ -136,6 +164,7 @@ function onOpenReviewForm(row?: Model.Review) {
                :rows="reviews?.data ?? []"
                :columns="reviewColumns"
                :total="reviews?.total ?? 0"
+               :loading="reviewsPending"
                v-model:page="(reviewQuery.page as number)"
                v-model:per-page="(reviewQuery.perPage as number)"
             >

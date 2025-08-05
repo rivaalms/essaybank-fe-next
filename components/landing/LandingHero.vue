@@ -14,41 +14,47 @@ function onAboutClick() {
 
 <template>
    <div class="h-[calc(100vh-var(--header-height))]">
-      <div class="relative h-full">
-         <div class="container mx-auto pt-(--header-height) h-full pb-56">
+      <div class="container mx-auto px-4 xl:px-0 grid grid-cols-5 gap-4 h-full">
+         <div class="h-full lg:pb-56 col-span-full lg:col-span-3">
             <div class="h-full flex items-center">
-               <div class="flex flex-col gap-4 flex-1">
-                  <span class="text-8xl leading-[1.15] font-bold font-display">
+               <div class="flex flex-col text-center lg:text-start gap-4 flex-1">
+                  <span class="text-3xl md:text-5xl lg:text-7xl leading-[1.15] font-black lg:font-bold font-display">
                      Masa Depan Pendidikan <br />
                      <span class="text-primary-500">Dimulai dari Sini!</span>
                   </span>
-                  <p class="text-muted-500 text-xl">
+                  <p class="text-muted-500 text-base lg:text-xl">
                      Jawaban esaimu akan membantu membuat sistem penilaian
                      otomatis yang lebih pintar!
                   </p>
-                  <div class="mt-8 flex gap-4">
+                  <div class="mt-8 flex justify-center lg:justify-start gap-4">
                      <BaseButton
                         size="xl"
                         variant="primary"
                         to="/essays"
                      >
-                        Mulai Sekarang
+                        <span class="font-medium">
+                           Mulai Sekarang
+                        </span>
                      </BaseButton>
                      <BaseButton
                         size="xl"
-                        variant="ghost"
+                        variant="default"
                         @click="onAboutClick"
                      >
-                        Tentang
+                        <span class="font-medium">
+                           Tentang
+                        </span>
                      </BaseButton>
                   </div>
                </div>
             </div>
          </div>
-         <NuxtImg
-            src="/img/teaching.svg"
-            class="absolute right-12 bottom-12 w-[43%]"
-         />
+         <div class="h-full col-span-full lg:col-span-2 hidden md:flex md:items-center md:justify-center">
+            <NuxtImg
+               src="/img/teaching.svg"
+               class="w-1/2 lg:w-full h-auto"
+            />
+         </div>
       </div>
    </div>
 </template>

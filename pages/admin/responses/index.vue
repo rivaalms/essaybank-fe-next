@@ -36,7 +36,7 @@ function onDetail(row: Model.Response) {
 
 <template>
    <div>
-      <BaseCard class="p-5 rouned-2xl! border-0 shadlow-xl">
+      <BaseCard class="p-5 rouned-2xl! border-0 shadow-xl">
          <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between">
                <BaseHeading
@@ -58,17 +58,19 @@ function onDetail(row: Model.Response) {
                v-model:per-page="(query.perPage as number)"
             >
                <template #row.question.questionText="{ row }">
-                  <div class="truncate max-w-96">
+                  <div class="truncate max-w-80">
                      {{ row.Question?.questionText }}
                   </div>
                </template>
                <template #row.responseText="{ row }">
-                  <div class="truncate max-w-96">
+                  <div class="truncate max-w-80">
                      {{ row.responseText }}
                   </div>
                </template>
                <template #row.updatedAt="{ row }">
-                  {{ dayjs(row.updatedAt).format("DD MMM YYYY HH:mm") }}
+                  <div class="min-w-36">
+                     {{ dayjs(row.updatedAt).format("DD MMM YYYY HH:mm") }}
+                  </div>
                </template>
                <template #row.actions="{ row }">
                   <div class="flex items-center">

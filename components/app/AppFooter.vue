@@ -15,24 +15,24 @@ function onContactClick(type: "mail" | "whatsapp") {
 
 <template>
    <footer
-      class="bg-muted-950 text-muted-50 h-(--footer-height) flex items-center"
+      class="bg-muted-950 text-muted-50 flex items-center"
    >
-      <div class="container mx-auto grid gap-4">
+      <div class="container mx-auto px-4 xl:px-0 py-12 grid gap-4">
          <div class="lg:max-w-screen-lg mx-auto">
             <div class="flex flex-col gap-12">
-               <div class="grid grid-cols-4 gap-8">
+               <div class="grid  lg:grid-cols-4 gap-8">
                   <div class="flex flex-col gap-4 col-span-2">
-                     <span class="font-bold text-lg font-display">
+                     <span class="font-semibold text-lg font-display tracking-wide">
                         EssayBank
                      </span>
-                     <p class="text-muted-400">
+                     <p class="text-muted-400 text-pretty">
                         Jawaban esaimu akan membantu membuat sistem penilaian
                         otomatis yang lebih pintar!
                      </p>
                   </div>
-                  <div class="flex flex-col gap-4">
-                     <span class="font-medium"> Navigasi </span>
-                     <ul class="space-y-2 text-muted-400">
+                  <div class="flex flex-col gap-6">
+                     <span class="font-medium tracking-wide"> Navigasi </span>
+                     <ul class="space-y-4 text-muted-400">
                         <li>
                            <NuxtLink
                               to="/"
@@ -59,8 +59,8 @@ function onContactClick(type: "mail" | "whatsapp") {
                         </li>
                      </ul>
                   </div>
-                  <div class="flex flex-col gap-4">
-                     <span class="font-medium">Kontak</span>
+                  <div class="flex flex-col gap-6">
+                     <span class="font-medium tracking-wide">Kontak</span>
                      <div class="flex flex-wrap gap-4">
                         <BaseButton
                            variant="dark"
@@ -79,7 +79,7 @@ function onContactClick(type: "mail" | "whatsapp") {
                </div>
                <hr class="border-muted-700" />
                <div class="flex justify-between">
-                  <span class="text-sm text-muted-400">
+                  <span class="text-muted-400 text-pretty">
                      &copy; {{ year }} Riva Almero
                   </span>
                </div>

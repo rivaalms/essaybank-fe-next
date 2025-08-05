@@ -137,7 +137,7 @@ const showPassword = ref({
       </BaseField>
       <BaseField
          id="password_confirmation"
-         label="Kata Sandi"
+         label="Konfirmasi Kata Sandi"
          :error="error.password_confirmation"
          v-slot="{ inputAttrs, inputRef }"
       >

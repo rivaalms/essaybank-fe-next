@@ -94,12 +94,16 @@ watch(
 </script>
 
 <template>
-   <div class="container mx-auto py-12">
-      <div class="grid grid-cols-3 gap-12">
+   <div class="container mx-auto px-4 py-12">
+      <div
+         class="grid grid-cols-1 lg:grid-cols-3 gap-12 gap-x-0 lg:gap-x-12 place-items-start"
+      >
          <!-- SECTION: Nav -->
-         <BaseCard class="p-5 flex flex-col gap-4 border-0 shadow-md">
-            <span class="font-medium"> Navigasi Kuis </span>
-            <div class="grid grid-cols-2 gap-4 max-h-[50vh] overflow-y-auto">
+         <BaseCard class="w-full p-5 flex flex-col gap-4 border-0 shadow-md">
+            <span class="font-medium tracking-wide"> Navigasi Kuis </span>
+            <div
+               class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-4 max-h-[20vh] lg:max-h-[50vh] overflow-y-auto"
+            >
                <template v-for="question in essayStore.totalQuestions">
                   <BaseCard
                      class="group border-dashed p-4 hover:border-primary-500 hover:text-primary-500 cursor-pointer"
@@ -115,7 +119,15 @@ watch(
                      @click="onNavigate(question)"
                   >
                      <div class="flex items-center justify-between">
-                        <span> Pertanyaan {{ question }} </span>
+                        <span
+                           class="text-sm font-medium text-muted-600"
+                           :class="{
+                              'text-primary-500':
+                                 currentQuestionPage == question,
+                           }"
+                        >
+                           Pertanyaan #{{ question }}
+                        </span>
                         <Icon
                            v-if="questionHasAnswer(question)"
                            name="lucide:check-circle"
@@ -133,18 +145,19 @@ watch(
          </BaseCard>
          <!-- !SECTION -->
          <!-- SECTION: Essay -->
-         <div class="col-span-2 max-h-[50vh] overflow-y-auto px-2">
+         <div class="col-span-2 w-full overflow-y-auto px-2">
             <div class="flex flex-col gap-8 pt-5">
-               <span class="font-medium text-lg"
-                  >Pertanyaan {{ currentQuestionPage }}</span
-               >
-               <div class="flex flex-col gap-4">
+               <span class="font-medium text-lg tracking-wide">
+                  Pertanyaan {{ currentQuestionPage }}
+               </span>
+               <div class="flex flex-col gap-8">
                   <p>
                      {{ currentQuestion?.questionText }}
                   </p>
                   <BaseTextarea
                      v-model="answer"
                      :rows="5"
+                     resize
                      placeholder="Tulis jawabanmu disini..."
                   />
                   <div class="flex justify-between">
@@ -154,16 +167,23 @@ watch(
                         @click="onPrev"
                      >
                         <Icon name="lucide:arrow-left" />
-                        Sebelumnya
+                        <span class="font-medium">
+                           Sebelumnya
+                        </span>
                      </BaseButton>
                      <span v-else />
                      <BaseButton
-                        v-if="essayStore.totalQuestions && currentQuestionPage < essayStore.totalQuestions"
+                        v-if="
+                           essayStore.totalQuestions &&
+                           currentQuestionPage < essayStore.totalQuestions
+                        "
                         variant="primary"
                         class="gap-2"
                         @click="onSubmit()"
                      >
-                        Selanjutnya
+                        <span class="font-medium">
+                           Selanjutnya
+                        </span>
                         <Icon name="lucide:arrow-right" />
                      </BaseButton>
                      <BaseButton
@@ -173,7 +193,9 @@ watch(
                         @click="onSubmit(true)"
                      >
                         <Icon name="lucide:check" />
-                        Selesai
+                        <span class="font-medium">
+                           Selesai
+                        </span>
                      </BaseButton>
                   </div>
                </div>

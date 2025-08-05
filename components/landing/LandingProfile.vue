@@ -30,7 +30,7 @@ const accordionValue = ref("1")
 </script>
 
 <template>
-   <div class="container mx-auto">
+   <div class="container mx-auto px-4 xl:px-0">
       <div class="lg:max-w-screen-lg mx-auto">
          <div class="flex flex-col gap-8">
             <BaseAvatar
@@ -45,10 +45,13 @@ const accordionValue = ref("1")
                      href="https://pddikti.kemdiktisaintek.go.id/detail-mahasiswa/mjLSIEUl4e8DW4nHLbCwc_17U0TfHGBraQyRgsUzm1pjIxwNLj2pLVj0neunt99rYqiefg=="
                      target="_blank"
                      class="nui-mark hover:underline"
-                     >Riva Almero</a
                   >
+                     Riva Almero
+                  </a>
                </p>
-               <p>Mahasiswa S1 Teknik Informatika di Universitas Widyatama</p>
+               <p class="text-center">
+                  Mahasiswa S1 Teknik Informatika di Universitas Widyatama
+               </p>
             </div>
             <BaseAccordion
                type="single"
@@ -61,11 +64,11 @@ const accordionValue = ref("1")
                      action="chevron"
                   >
                      <template #title>
-                        <span class="text-base">
+                        <span class="text-base font-medium tracking-wide">
                            {{ item.title }}
                         </span>
                      </template>
-                     <p class="text-pretty">
+                     <p class="text-pretty text-base text-black">
                         {{ item.content }}
                      </p>
                   </BaseAccordionItem>

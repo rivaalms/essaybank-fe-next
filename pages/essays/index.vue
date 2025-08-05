@@ -9,18 +9,18 @@ onMounted(() => {
 </script>
 
 <template>
-   <div class="container mx-auto py-12">
+   <div class="container mx-auto px-4 xl:py-0 py-12">
       <div class="xl:max-w-screen-lg mx-auto">
          <div class="flex flex-col gap-8">
-            <h1 class="font-display font-bold text-2xl">
+            <h1 class="font-display font-bold text-2xl tracking-wide">
                Sebelum mulai, baca ini dulu!
             </h1>
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-8">
                <p class="text-pretty">
                   Sebelum kamu mulai mengisi esai, ada beberapa hal penting yang
                   perlu kamu tahu:
                </p>
-               <ul class="list-disc space-y-2 ms-4">
+               <ul class="list-disc space-y-4 ms-6 lg:ms-8">
                   <li class="text-pretty">
                      <span class="font-medium text-primary-500">
                         Ada {{ essayStore.totalQuestions }} pertanyaan esai yang
@@ -51,10 +51,10 @@ onMounted(() => {
                      </span>
                   </li>
                </ul>
-               <p class="text-pretty font-display font-semibold">
+               <p class="text-pretty font-display font-semibold tracking-wide text-lg">
                   Cara mengisi esai:
                </p>
-               <ul class="list-disc space-y-2 ms-4">
+               <ul class="list-disc space-y-4 ms-6 lg:ms-8">
                   <li>
                      Akan tampil
                      <span class="font-medium text-primary-500">
@@ -92,7 +92,9 @@ onMounted(() => {
                   class="gap-2"
                   to="/essays/1"
                >
-                  Mulai Sekarang
+                  <span class="font-medium">
+                     Mulai Sekarang
+                  </span>
                   <Icon name="lucide:arrow-right" />
                </BaseButton>
             </div>

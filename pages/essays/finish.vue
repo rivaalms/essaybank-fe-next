@@ -1,8 +1,8 @@
 <template>
-   <div class="container mx-auto py-12">
+   <div class="container mx-auto px-4 py-12">
       <div class="lg:max-w-screen-lg mx-auto">
          <div class="flex flex-col gap-8">
-            <h1 class="font-display font-bold text-2xl">
+            <h1 class="font-display font-bold text-2xl tracking-wide">
                🎉 Terima Kasih, Kamu Keren! 🎉
             </h1>
             <div class="flex flex-col gap-4">
