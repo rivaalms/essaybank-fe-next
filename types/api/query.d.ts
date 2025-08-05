@@ -13,5 +13,8 @@ declare namespace API {
       type Review = Paginable & {
          responseId?: number
       }
+      type User = Paginable & {
+         search?: string
+      }
    }
 }
