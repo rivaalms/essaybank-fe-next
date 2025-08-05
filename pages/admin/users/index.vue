@@ -3,6 +3,7 @@ definePageMeta({
    layout: "admin",
 })
 
+const appStore = useAppStore()
 const dayjs = useDayjs()
 
 const query = ref<API.Query.User>({
@@ -42,7 +43,32 @@ const columns: DataTableColumn[] = [
    { field: "actions", header: "" },
 ]
 
-function onOpenForm() {}
+const formLoading = shallowRef(false)
+function onOpenForm(row?: Model.User) {
+   appStore.showDialog(
+      "Form Pengguna",
+      h(resolveComponent("FormUser"), {
+         data: row,
+         loading: formLoading,
+         onSubmit: async (values: InferSchema<typeof $userSchema, "create">) => {
+            formLoading.value = true
+            const { password_confirmation, ...payload } = values
+            await $userApi().create(payload)
+               .then((res) => {
+                  appStore.notify("Sukses", res.meta.message)
+                  appStore.closeDialog()
+                  refresh()
+               })
+               .finally(() => {
+                  formLoading.value = false
+               })
+         }
+      }),
+      {
+         width: "800px"
+      }
+   )
+}
 </script>
 
 <template>

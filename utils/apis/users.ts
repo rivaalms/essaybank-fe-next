@@ -6,7 +6,20 @@ export function $userApi() {
       })
    }
 
+   async function create(
+      body: Omit<
+         InferSchema<typeof $userSchema, "create">,
+         "password_confirmation"
+      >
+   ) {
+      return await $api<API.Response<Model.User>>(`/users`, {
+         method: "post",
+         body,
+      })
+   }
+
    return {
       get,
+      create,
    }
 }
