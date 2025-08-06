@@ -2,36 +2,47 @@
 const route = useRoute()
 const essayStore = useEssayStore()
 
-const currentQuestionPage = computed(() => {
+const currentQuestionId = computed(() => {
    return Number(route.params.id as string)
 })
 
 const currentQuestion = computed(() => {
    return essayStore.questions?.find(
-      (question) => question.id == currentQuestionPage.value
+      (question) => question.id == currentQuestionId.value
    )
 })
 
-const answer = shallowRef()
+const answer = shallowRef<string>()
 
 async function onPrev() {
-   if (currentQuestionPage.value == 1) return
    await generateResponse().then(() => {
-      navigateTo(`/essays/${currentQuestionPage.value - 1}`)
+      navigateTo(`/essays/${currentQuestionId.value - 1}`)
    })
 }
-async function onSubmit(finish?: boolean) {
+async function onSubmit(currentQuestionId?: number) {
    await generateResponse().then(() => {
-      if (finish) {
+      if (!currentQuestionId) {
+         console.log("masuk if")
          navigateTo("/essays/finish")
       } else {
-         navigateTo(`/essays/${currentQuestionPage.value + 1}`)
+         console.log("masuk else")
+         const currentQuestionIndex = essayStore.questions?.findIndex(
+            (q) => q.id == currentQuestionId
+         )
+         if (
+            currentQuestionIndex === null ||
+            currentQuestionIndex === undefined
+         )
+            return
+         const nextQuestion = essayStore.questions?.[currentQuestionIndex + 1]
+         if (!nextQuestion) return
+         navigateTo(`/essays/${nextQuestion.id}`)
       }
    })
 }
 
 async function onNavigate(question: number) {
-   if (question == currentQuestionPage.value) return
+   if (question == currentQuestionId.value) return
    await generateResponse().then(() => {
       navigateTo(`/essays/${question}`)
    })
@@ -40,8 +51,15 @@ async function onNavigate(question: number) {
 async function generateResponse() {
    try {
       if (!answer.value || !essayStore.ip) return
+      if (
+         questionHasAnswer(currentQuestionId.value) &&
+         getQuestionAnswer(currentQuestionId.value)?.responseText.trim() ==
+            answer.value.trim()
+      )
+         return
+
       await essayStore.createResponse(
-         currentQuestionPage.value,
+         currentQuestionId.value,
          answer.value,
          essayStore.ip
       )
@@ -52,6 +70,10 @@ async function generateResponse() {
 
 function questionHasAnswer(questionId: number) {
    return essayStore.responses.some((item) => item.questionId == questionId)
+}
+
+function getQuestionAnswer(questionId: number) {
+   return essayStore.responses.find((item) => item.questionId == questionId)
 }
 
 onMounted(async () => {
@@ -85,7 +107,7 @@ watch(
    (value) => {
       if (value) {
          answer.value =
-            value.find((item) => item.questionId === currentQuestionPage.value)
+            value.find((item) => item.questionId === currentQuestionId.value)
                ?.responseText ?? ""
       }
    },
@@ -104,36 +126,36 @@ watch(
             <div
                class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-4 max-h-[20vh] lg:max-h-[50vh] overflow-y-auto"
             >
-               <template v-for="question in essayStore.totalQuestions">
+               <template v-for="(question, index) in essayStore.questions">
                   <BaseCard
                      class="group border-dashed p-4 hover:border-primary-500 hover:text-primary-500 cursor-pointer"
                      :class="[
                         {
                            'border-primary-500 text-primary-500 bg-primary-50':
-                              currentQuestionPage == question,
+                              currentQuestionId == question.id,
                            'border-success-500 text-success-500 bg-success-50':
-                              questionHasAnswer(question) &&
-                              currentQuestionPage != question,
+                              questionHasAnswer(question.id) &&
+                              currentQuestionId != question.id,
                         },
                      ]"
-                     @click="onNavigate(question)"
+                     @click="onNavigate(question.id)"
                   >
                      <div class="flex items-center justify-between">
                         <span
                            class="text-sm font-medium text-muted-600"
                            :class="{
                               'text-primary-500':
-                                 currentQuestionPage == question,
+                                 currentQuestionId == question.id,
                            }"
                         >
-                           Pertanyaan #{{ question }}
+                           Pertanyaan #{{ index + 1 }}
                         </span>
                         <Icon
-                           v-if="questionHasAnswer(question)"
+                           v-if="questionHasAnswer(question.id)"
                            name="lucide:check-circle"
                            class="group-hover:text-primary-500"
                            :class="[
-                              currentQuestionPage == question
+                              currentQuestionId == question.id
                                  ? 'text-primary-500'
                                  : 'text-success-500',
                            ]"
@@ -148,7 +170,7 @@ watch(
          <div class="col-span-2 w-full overflow-y-auto px-2">
             <div class="flex flex-col gap-8 pt-5">
                <span class="font-medium text-lg tracking-wide">
-                  Pertanyaan {{ currentQuestionPage }}
+                  Pertanyaan {{ currentQuestionId }}
                </span>
                <div class="flex flex-col gap-8">
                   <p>
@@ -162,40 +184,34 @@ watch(
                   />
                   <div class="flex justify-between">
                      <BaseButton
-                        v-if="currentQuestionPage > 1"
+                        v-if="currentQuestionId > 1"
                         class="gap-2"
                         @click="onPrev"
                      >
                         <Icon name="lucide:arrow-left" />
-                        <span class="font-medium">
-                           Sebelumnya
-                        </span>
+                        <span class="font-medium"> Sebelumnya </span>
                      </BaseButton>
                      <span v-else />
                      <BaseButton
                         v-if="
                            essayStore.totalQuestions &&
-                           currentQuestionPage < essayStore.totalQuestions
+                           currentQuestionId < essayStore.totalQuestions
                         "
                         variant="primary"
                         class="gap-2"
-                        @click="onSubmit()"
+                        @click="onSubmit(currentQuestionId)"
                      >
-                        <span class="font-medium">
-                           Selanjutnya
-                        </span>
+                        <span class="font-medium"> Selanjutnya </span>
                         <Icon name="lucide:arrow-right" />
                      </BaseButton>
                      <BaseButton
                         v-else
                         variant="primary"
                         class="gap-2"
-                        @click="onSubmit(true)"
+                        @click="onSubmit()"
                      >
                         <Icon name="lucide:check" />
-                        <span class="font-medium">
-                           Selesai
-                        </span>
+                        <span class="font-medium"> Selesai </span>
                      </BaseButton>
                   </div>
                </div>
