@@ -21,15 +21,14 @@ export default async function <
 ): Promise<TypedInternalResponse<R, T>> {
    const config = useRuntimeConfig().public
    const token = useAuthStore().getToken
-   const tokenExpiredAt = useAuthStore().getTokenExpiresAt
-   const dayjs = useDayjs()
+   const isTokenExpired = useAuthStore().isTokenExpired()
 
    const handler = $fetch.create({
       baseURL: config.apiUrl,
 
       async onRequest({ request, options }) {
          options.headers.set("Accept", "application/json")
-         if (token && dayjs().diff(tokenExpiredAt) < 1) {
+         if (token && !isTokenExpired) {
             options.headers.set("Authorization", `Bearer ${token}`)
          }
       },
@@ -60,7 +59,7 @@ export default async function <
          const status = res.status
          if (status == 401) {
             useAuthStore().$reset()
-            navigateTo("/login")
+            navigateTo("/admin/login")
          } else {
             throw error ?? res._data
          }

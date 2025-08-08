@@ -9,16 +9,25 @@ export const useAuthStore = defineStore(
       const getTokenExpiresAt = computed(() => tokenExpiresAt.value)
 
       async function login(values: InferSchema<typeof $authSchema, "login">) {
-         const res = await $authApi().login(values)
-         user.value = res.data.user
-         token.value = res.data.token.value
-         const dayjs = useDayjs()
-         tokenExpiresAt.value = dayjs(res.data.token.expiresAt).toJSON()
-         return res
+         try {
+            const res = await $authApi().login(values)
+            user.value = res.data.user
+            token.value = res.data.token.value
+            const dayjs = useDayjs()
+            tokenExpiresAt.value = dayjs(res.data.token.expiresAt).toJSON()
+            return res
+         } catch (e) {
+            throw e
+         }
       }
 
       function logout() {
          $reset()
+      }
+
+      function isTokenExpired() {
+         const dayjs = useDayjs()
+         return !token.value || dayjs().diff(tokenExpiresAt.value) > 0
       }
 
       function $reset() {
@@ -35,6 +44,7 @@ export const useAuthStore = defineStore(
          getTokenExpiresAt,
          login,
          logout,
+         isTokenExpired,
          $reset,
       }
    },

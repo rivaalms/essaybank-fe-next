@@ -17,9 +17,15 @@ const appStore = useAppStore()
 const authStore = useAuthStore()
 async function onSubmit() {
    await submit(async (values) => {
-      const response = await authStore.login(values)
-      appStore.notify("Sukses", response.meta.message)
-      await navigateTo("/admin")
+      await authStore.login(values)
+         .then((res) => {
+            appStore.notify("Sukses", res.meta.message)
+            navigateTo("/admin")
+         })
+         .catch((e) => {
+            appStore.notify("Terjadi kesalahan", e.data.meta.error)
+            console.error(e)
+         })
    })
 }
 </script>
@@ -52,7 +58,9 @@ async function onSubmit() {
                      type="submit"
                      :loading="loading"
                   >
-                     Login
+                     <span class="font-medium">
+                        Login
+                     </span>
                   </BaseButton>
                </div>
             </form>

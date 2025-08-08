@@ -1,16 +1,20 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-   const token = useAuthStore().getToken
-   const tokenExpiredAt = useAuthStore().getTokenExpiresAt
-   const dayjs = useDayjs()
+   const authStore = useAuthStore()
+   const token = authStore.getToken
+   const isTokenExpired = authStore.isTokenExpired()
 
    const isAdminRoute = to.path.startsWith("/admin")
    const ignoredRoutes = ["/admin/login"]
-   const userIsInIgnoredRoutes = ignoredRoutes.some((route) => route === to.path)
+   const userIsInIgnoredRoutes = ignoredRoutes.some(
+      (route) => route === to.path
+   )
 
-   if (!isAdminRoute) return
+   if (token && !isAdminRoute) {
+      return navigateTo("/admin", { replace: true })
+   }
 
-   if (token && dayjs().diff(tokenExpiredAt) > 0) {
-      useAuthStore().$reset()
+   if (token && isTokenExpired) {
+      authStore.$reset()
       useAppStore().notify("Warning", "Token kedaluwarsa")
       return navigateTo("/admin/login", { replace: true })
    }
