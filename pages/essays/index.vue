@@ -90,7 +90,7 @@ onMounted(() => {
                <BaseButton
                   variant="primary"
                   class="gap-2"
-                  to="/essays/1"
+                  :to="`/essays/${essayStore.questions?.[0].id}`"
                >
                   <span class="font-medium">
                      Mulai Sekarang
