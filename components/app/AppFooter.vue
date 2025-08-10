@@ -7,7 +7,7 @@ function onContactClick(type: "mail" | "whatsapp") {
    a.href =
       type === "mail"
          ? "mailto:riva.almero@widyatama.ac.id"
-         : "https://wa.me/6289540199882"
+         : "https://wa.me/62895401998822"
    a.click()
    a.remove()
 }
