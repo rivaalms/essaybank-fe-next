@@ -169,9 +169,9 @@ watch(
          <!-- SECTION: Essay -->
          <div class="col-span-2 w-full overflow-y-auto px-2">
             <div class="flex flex-col gap-8 pt-5">
-               <span class="font-medium text-lg tracking-wide">
-                  Pertanyaan {{ currentQuestionId }}
-               </span>
+<!--               <span class="font-medium text-lg tracking-wide">-->
+<!--                  Pertanyaan {{ currentQuestionId }}-->
+<!--               </span>-->
                <div class="flex flex-col gap-8">
                   <p>
                      {{ currentQuestion?.questionText }}
