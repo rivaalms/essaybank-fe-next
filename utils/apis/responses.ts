@@ -39,10 +39,20 @@ export function $responseApi() {
       })
    }
 
+   async function flag(id: number, value: boolean) {
+      return await $api<API.Response<Model.Response>>(`/responses/${id}/flag`, {
+         method: "patch",
+         body: {
+            flagged: value
+         }
+      })
+   }
+
    return {
       get,
       find,
       create,
       update,
+      flag
    }
 }

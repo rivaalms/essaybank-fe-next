@@ -24,13 +24,25 @@ const columns: DataTableColumn[] = [
    { field: "identifier", header: "Responden" },
    { field: "question.questionText", header: "Pertanyaan" },
    { field: "responseText", header: "Jawaban" },
+   { field: "hasReview", header: "Diulas" },
    { field: "updatedAt", header: "Terakhir Diubah" },
-   { field: "actions", header: "" }
+   { field: "actions", header: "" },
 ]
 
 const appStore = useAppStore()
 function onDetail(row: Model.Response) {
    navigateTo(`/admin/responses/${row.id}`)
+}
+
+async function onUpdateFlag(row: Model.Response) {
+   try {
+      const response = await $responseApi().flag(row.id, !row.flagged)
+      appStore.notify("Sukses", response.meta.message)
+      refresh()
+   } catch (e) {
+      appStore.notify("Error", "Gagal menandai respons")
+      console.error(e)
+   }
 }
 </script>
 
@@ -54,8 +66,8 @@ function onDetail(row: Model.Response) {
                :columns="columns"
                :total="data?.total ?? 0"
                :loading="status === 'pending'"
-               v-model:page="(query.page as number)"
-               v-model:per-page="(query.perPage as number)"
+               v-model:page="query.page as number"
+               v-model:per-page="query.perPage as number"
             >
                <template #row.question.questionText="{ row }">
                   <div class="truncate max-w-80">
@@ -66,6 +78,11 @@ function onDetail(row: Model.Response) {
                   <div class="truncate max-w-80">
                      {{ row.responseText }}
                   </div>
+               </template>
+               <template #row.hasReview="{ row }">
+                  <BaseTag :variant="row.hasReview ? 'primary' : 'default'">
+                     {{ row.hasReview ? "Sudah" : "Belum" }}
+                  </BaseTag>
                </template>
                <template #row.updatedAt="{ row }">
                   <div class="min-w-36">
@@ -84,6 +101,21 @@ function onDetail(row: Model.Response) {
                            @click="onDetail(row)"
                         >
                            <Icon name="lucide:eye" />
+                        </BaseButton>
+                     </BaseTooltip>
+                     <BaseTooltip
+                        :content="row.flagged ? 'Hapus tanda' : 'Tandai tidak valid'"
+                        variant="dark"
+                     >
+                        <BaseButton
+                           variant="ghost"
+                           size="icon-sm"
+                           @click="onUpdateFlag(row)"
+                        >
+                           <Icon
+                              :name="row.flagged ? 'grommet-icons:flag-fill' : 'grommet-icons:flag'"
+                              :class="{ 'text-amber-500': row.flagged }"
+                           />
                         </BaseButton>
                      </BaseTooltip>
                   </div>
