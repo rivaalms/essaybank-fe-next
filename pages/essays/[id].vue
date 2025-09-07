@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
 const essayStore = useEssayStore()
+const identifierStore = useIdentifierStore()
 
 const currentQuestionId = computed(() => {
    return Number(route.params.id as string)
@@ -50,7 +51,7 @@ async function onNavigate(question: number) {
 
 async function generateResponse() {
    try {
-      if (!answer.value || !essayStore.identifier) return
+      if (!answer.value || !identifierStore.value) return
       if (
          questionHasAnswer(currentQuestionId.value) &&
          getQuestionAnswer(currentQuestionId.value)?.responseText.trim() ==
@@ -61,7 +62,7 @@ async function generateResponse() {
       await essayStore.createResponse(
          currentQuestionId.value,
          answer.value,
-         essayStore.identifier
+         identifierStore.value
       )
    } catch (error) {
       console.log("🚀 ~ generateResponse ~ error:", error)
@@ -81,11 +82,11 @@ onMounted(async () => {
       await essayStore.fetchQuestions()
    }
 
-   if (!essayStore.identifier) await essayStore.generateIdentifier()
+   if (!identifierStore.value) await identifierStore.generateIdentifier()
 })
 
 const unwatchIdentifier = watch(
-   () => essayStore.identifier,
+   () => identifierStore.value,
    async (value) => {
       if (value) {
          await $responseApi()

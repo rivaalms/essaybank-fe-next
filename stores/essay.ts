@@ -1,5 +1,3 @@
-import * as uuid from "uuid"
-
 export const useEssayStore = defineStore("essay", () => {
    const questions = ref<Model.Question[]>()
    const totalQuestions = ref<number>()
@@ -12,10 +10,6 @@ export const useEssayStore = defineStore("essay", () => {
 
    const responses = ref<Pick<Model.Response, "questionId" | "responseText" | "id">[]>([])
 
-   const identifier = shallowRef<string>()
-   async function generateIdentifier() {
-      identifier.value = uuid.v4()
-   }
 
    async function createResponse(questionId: number, responseText: string, identifier?: string) {
       const existingResponse = responses.value.find((res) => res.questionId === questionId)
@@ -40,8 +34,6 @@ export const useEssayStore = defineStore("essay", () => {
       totalQuestions,
       responses,
       fetchQuestions,
-      identifier,
-      generateIdentifier,
       createResponse
    }
 })
