@@ -100,7 +100,8 @@ const unwatchIdentifier = watch(
                unwatchIdentifier()
             })
       }
-   }
+   },
+   { immediate: true }
 )
 
 watch(
