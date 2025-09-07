@@ -50,7 +50,7 @@ async function onNavigate(question: number) {
 
 async function generateResponse() {
    try {
-      if (!answer.value || !essayStore.ip) return
+      if (!answer.value || !essayStore.identifier) return
       if (
          questionHasAnswer(currentQuestionId.value) &&
          getQuestionAnswer(currentQuestionId.value)?.responseText.trim() ==
@@ -61,7 +61,7 @@ async function generateResponse() {
       await essayStore.createResponse(
          currentQuestionId.value,
          answer.value,
-         essayStore.ip
+         essayStore.identifier
       )
    } catch (error) {
       console.log("🚀 ~ generateResponse ~ error:", error)
@@ -81,11 +81,11 @@ onMounted(async () => {
       await essayStore.fetchQuestions()
    }
 
-   if (!essayStore.ip) await essayStore.fetchIp()
+   if (!essayStore.identifier) await essayStore.generateIdentifier()
 })
 
-const unwatchIp = watch(
-   () => essayStore.ip,
+const unwatchIdentifier = watch(
+   () => essayStore.identifier,
    async (value) => {
       if (value) {
          await $responseApi()
@@ -96,7 +96,7 @@ const unwatchIp = watch(
                   questionId: item.questionId,
                   responseText: item.responseText,
                }))
-               unwatchIp()
+               unwatchIdentifier()
             })
       }
    }

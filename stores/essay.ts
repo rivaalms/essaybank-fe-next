@@ -1,3 +1,5 @@
+import * as uuid from "uuid"
+
 export const useEssayStore = defineStore("essay", () => {
    const questions = ref<Model.Question[]>()
    const totalQuestions = ref<number>()
@@ -10,15 +12,12 @@ export const useEssayStore = defineStore("essay", () => {
 
    const responses = ref<Pick<Model.Response, "questionId" | "responseText" | "id">[]>([])
 
-   const ip = shallowRef<string>()
-   async function fetchIp() {
-      const response = await $fetch<{ ip: string }>(`https://api.ipify.org?format=json`, {
-         method: "get"
-      })
-      ip.value = response.ip
+   const identifier = shallowRef<string>()
+   async function generateIdentifier() {
+      identifier.value = uuid.v4()
    }
 
-   async function createResponse(questionId: number, responseText: string, ip?: string) {
+   async function createResponse(questionId: number, responseText: string, identifier?: string) {
       const existingResponse = responses.value.find((res) => res.questionId === questionId)
 
       if (existingResponse) {
@@ -26,7 +25,7 @@ export const useEssayStore = defineStore("essay", () => {
          await $responseApi().update(existingResponse.id, values)
          existingResponse.responseText = values.responseText
       } else {
-         const values = await $responseSchema().create.validate({ questionId, responseText, ip })
+         const values = await $responseSchema().create.validate({ questionId, responseText, identifier })
          const res = await $responseApi().create(values)
          responses.value.push({
             id: res.data.id,
@@ -41,8 +40,8 @@ export const useEssayStore = defineStore("essay", () => {
       totalQuestions,
       responses,
       fetchQuestions,
-      ip,
-      fetchIp,
+      identifier,
+      generateIdentifier,
       createResponse
    }
 })

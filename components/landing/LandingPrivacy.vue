@@ -19,12 +19,13 @@
                         digunakan untuk keperluan penelitian.
                      </p>
                      <p class="text-pretty">
-                        Selain itu, sistem akan mencatat alamat IP kamu semata-mata
-                        untuk keperluan penyimpanan dan pengindeksan data. Jangan
-                        khawatir, data ini hanya digunakan untuk analisis teknis
-                        dan tidak akan dipublikasikan atau dibagikan ke siapa pun.
-                        Privasi dan anonimitas kamu tetap menjadi prioritas utama
-                        dalam penelitian ini!
+                        Selain itu, sistem membuat kode pengenal yang disimpan
+                        ke dalam browser kamu semata-mata untuk keperluan
+                        penyimpanan dan pengindeksan data. Jangan khawatir, data
+                        ini hanya digunakan untuk analisis teknis dan tidak akan
+                        dipublikasikan atau dibagikan ke siapa pun. Privasi dan
+                        anonimitas kamu tetap menjadi prioritas utama dalam
+                        penelitian ini!
                      </p>
                   </div>
                </div>
