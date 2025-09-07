@@ -1,11 +1,19 @@
 export function $responseApi() {
    async function get(query?: API.Query.Response) {
       const token = useAuthStore().getToken
-      const identifier = useEssayStore().identifier
+      const identifierStore = useIdentifierStore()
+      let identifier = identifierStore.value
+
+      if (!token && !identifier) {
+         await identifierStore.generateIdentifier()
+         identifier = identifierStore.value
+      }
+
       const headers: Record<string, string> = {}
       if (!token && identifier) {
          headers.identifier = identifier
       }
+
       return await $api<API.Response<API.Paginate<Model.Response>>>(
          `/responses`,
          {
